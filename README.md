@@ -16,15 +16,19 @@ Amazon VPC (Virtual Private Cloud) で仮想ネットワークを作成し、
 次のソフトウエアを使えるようにしておく
 * AWS-CLI (Command Line Intefarce) : コマンドラインからAWSを操作
   * http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html
-* Ruby (>=2.0)
+
+  * Ruby (>=2.0)
+
 * cfndsl : Amazon CloudFormationのテンプレートをDSLで作成するツール。
-  Rubygemsでインストールする。
+Rubygemsでインストールする。
 
         gem install cfndsl
 
-* 本パッケージ
+* 本パッケージの取得
 
-        wget https://github.com/masa16/amazon-ec2-gfarm-demo
+        wget https://github.com/masa16/amazon-ec2-gfarm-demo/archive/master.tar.gz -O amazon-ec2-gfarm-demo.tar.gz
+        tar xzf amazon-ec2-gfarm-demo.tar.gz
+        cd amazon-ec2-gfarm-demo-master
 
 ## Gfarmインスタンスの構築
 
@@ -40,11 +44,10 @@ Amazon VPC (Virtual Private Cloud) で仮想ネットワークを作成し、
 
         sh setup-keypair.sh
 
-    * パスワードを設定可能
+  * パスワードを設定
 
 * 環境構築状況を確認できるように、ブラウザからAWSコンソールを開いておく。
-
-* https://console.aws.amazon.com
+  * https://console.aws.amazon.com
 
 * CloudFormation でスタックを作成
 
@@ -81,7 +84,8 @@ Amazon VPC (Virtual Private Cloud) で仮想ネットワークを作成し、
 
 ## Pwrakeのデモ
 
-* ここでは、天文画像処理ソフトウエアのMontageをPwrakeで並列分散処理するデモを行う。
+* ここでは、天文画像処理ソフトウエアのMontageのワークフローを、
+並列ワークフロー実行システムPwrakeにより実行するデモを行う。
 * 上記の構築で、すでにPwrakeとMontageソフトウェアはインストールされている。
 * 次のスクリプトで、ワークフローの設定と入力ファイルをGfarmファイルシステムにコピーする。
 
@@ -106,3 +110,21 @@ Amazon VPC (Virtual Private Cloud) で仮想ネットワークを作成し、
         scp aws-mds:gfm/montage-m31/shrunk.jpg .
         scp -r aws-mds:gfm/montage-m31/log_* .
 
+* 結果の確認（例）
+
+        display shrunk.jpg
+        firefox log*/report.html
+
+## 起動・停止
+
+* インスタンスの停止（インスタンスは残る：再開可能）
+
+        sh stop-instances.sh
+
+* インスタンスの再開
+
+        sh start-instances.sh
+
+* スタックの消去（インスタンスを消去：再開不可）
+
+        sh delete-stack.sh
