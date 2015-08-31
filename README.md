@@ -19,6 +19,8 @@ Amazon VPC (Virtual Private Cloud) で仮想ネットワークを作成し、
 
 * デフォルトでは、1年間の無料枠範囲内の t2.micro のインスタンスを作成。
 
+* 下記のコマンドライン入力は、bash を想定
+
 ## 必要なソフトウエア
 
 次のソフトウエアを使えるようにしておく
@@ -27,20 +29,20 @@ Amazon VPC (Virtual Private Cloud) で仮想ネットワークを作成し、
 
 * Ruby (>=2.0)
 
-* cfndsl : Amazon CloudFormationのテンプレートをDSLで作成するツール。
+* cfndsl: Amazon CloudFormationのテンプレートをDSLで作成するツール。
 Rubygemsでインストールする。
 
-        gem install cfndsl
+        $ gem install cfndsl
 
-* 本パッケージ: 取得方法は、
+* 本パッケージ： 取得方法
 
-        git clone https://github.com/masa16/amazon-ec2-gfarm-demo.git
-        cd amazon-ec2-gfarm-demo
+        $ git clone https://github.com/masa16/amazon-ec2-gfarm-demo.git
+        $ cd amazon-ec2-gfarm-demo
 
-または
+  または
 
-        wget https://github.com/masa16/amazon-ec2-gfarm-demo/archive/master.tar.gz -O - | tar xzf -
-        cd amazon-ec2-gfarm-demo-master
+        $ wget https://github.com/masa16/amazon-ec2-gfarm-demo/archive/master.tar.gz -O - | tar xzf -
+        $ cd amazon-ec2-gfarm-demo-master
 
 ## Gfarmインスタンスの構築
 
@@ -48,32 +50,39 @@ Rubygemsでインストールする。
 
 * AWS-CLIでAWSにアクセスできるようにする
 
-        aws configure
+        $ aws configure
+        AWS Access Key ID [None]: アクセスIDを入力
+        AWS Secret Access Key [None]: アクセスキーを入力
+        Default region name [None]: デフォルトリージョンを入力
+        Default output format [None]: デフォルト出力フォーマットを入力
 
 * env.sh を見て、設定を確認
 
-* SSHで KeyPair を作成し、公開鍵をAWSにアップロードする
+* 次のスクリプトで、SSHで KeyPair を作成し、公開鍵をAWSにアップロードする
 
-        sh setup-keypair.sh
+        $ sh setup-keypair.sh
 
   * パスワードを設定
 
 * 環境構築状況を確認できるように、ブラウザからAWSコンソールを開いておく。
   * https://console.aws.amazon.com
 
-* CloudFormation でスタックを作成
+* 次のスクリプトで、CloudFormation でスタックを作成
 
-        sh create-stack.sh
+        $ sh create-stack.sh
 
     * 作成するFSNインスタンスの数を尋ねるので、数字を入力する。
+
+            Number of File System Nodes? : 10
+
     * 自動的にcfndslでCloudFormationのテンプレートを作成し、環境構築を行っている。
     * ブラウザからAWSコンソールを開き、インスタンスの作成状況を確認する。
     * 1個のMDSインスタンスとn個のFNSインスタンスが作られる。
     * Gfarmなどのソフトウエアも自動的にインストールされる。
 
-* インスタンスが作成されたら、sshの設定を行う
+* インスタンスが作成されたら、次のスクリプトでsshの設定を行う
 
-        sh setup-ssh.sh
+        $ sh setup-ssh.sh
 
     * ~/.ssh/config に自動的に設定を追加するので、確認する。
     * EC2のログインアカウント: ec2-user
@@ -86,13 +95,33 @@ Rubygemsでインストールする。
 
 * MDSにログインし、Gfarmが起動していることを確認
 
-        ssh aws-mds
-        gfdf
+        $ ssh aws-mds
+
+        [ec2-user@ip-10-0-0-10 ~]$ gfdf
+            1K-blocks          Used         Avail Use% Host
+              8023564       1772852       6250712  22% ip-10-0-0-10.us-west-2.compute.internal
+        ----------------------------------------------
+              8023564       1772852       6250712  22%
 
 * FSNの設定は、次のスクリプトで行う必要がある。
 
-        sh setup-gfsd.sh
-        gfdf
+        $ sh setup-gfsd.sh
+
+        [ec2-user@ip-10-0-0-10 ~]$ gfdf
+            1K-blocks          Used         Avail Use% Host
+              8023564       1772968       6250596  22% ip-10-0-0-10.us-west-2.compute.internal
+              8023564       1584792       6438772  20% ip-10-0-0-11.us-west-2.compute.internal
+              8023564       1584792       6438772  20% ip-10-0-0-12.us-west-2.compute.internal
+              8023564       1584792       6438772  20% ip-10-0-0-13.us-west-2.compute.internal
+              8023564       1584792       6438772  20% ip-10-0-0-14.us-west-2.compute.internal
+              8023564       1584792       6438772  20% ip-10-0-0-15.us-west-2.compute.internal
+              8023564       1584796       6438768  20% ip-10-0-0-16.us-west-2.compute.internal
+              8023564       1584792       6438772  20% ip-10-0-0-17.us-west-2.compute.internal
+              8023564       1584792       6438772  20% ip-10-0-0-18.us-west-2.compute.internal
+              8023564       1584792       6438772  20% ip-10-0-0-19.us-west-2.compute.internal
+              8023564       1584792       6438772  20% ip-10-0-0-20.us-west-2.compute.internal
+        ----------------------------------------------
+             88259204      17620892      70638312  20%
 
 ## Pwrakeのデモ
 
@@ -101,42 +130,39 @@ Rubygemsでインストールする。
 * 上記の構築で、すでにPwrakeとMontageソフトウェアはインストールされている。
 * 次のスクリプトで、ワークフローの設定と入力ファイルをGfarmファイルシステムにコピーする。
 
-        sh prepare-demo.sh
+        $ sh prepare-demo.sh
 
 * 次の手順で、ワークフローを実行する
 
-        ssh aws-mds
-        cd gfm/montage-m31
-        pwrake
+        $ ssh aws-mds
+
+        [ec2-user@ip-10-0-0-10 ~]$ cd gfm/montage-m31
+        [ec2-user@ip-10-0-0-10 montage-m31]$ pwrake
 
 * 実行ログが log_20150904-... のような名前のディレクトリに出力されるので、
 そこから統計情報をHTMLで出力
 
-        # Gnuplot font
-        export GDFONTPATH=/usr/share/fonts/dejavu
-        export GNUPLOT_DEFAULT_GDFONT=DejaVuSans
-        pwrake --report log_*
+        [ec2-user@ip-10-0-0-10 montage-m31]$ export GDFONTPATH=/usr/share/fonts/dejavu
+        [ec2-user@ip-10-0-0-10 montage-m31]$ export GNUPLOT_DEFAULT_GDFONT=DejaVuSans
+        [ec2-user@ip-10-0-0-10 montage-m31]$ pwrake --report log_*
 
-* 実行結果のファイルをローカルにコピー
+* HTTP経由でGfarmのディレクトリにアクセス
 
-        scp aws-mds:gfm/montage-m31/shrunk.jpg .
-        scp -r aws-mds:gfm/montage-m31/log_* .
+        $ firefox http://$(cat MdsDnsName)/gfarm
 
-* 結果の確認（例）
-
-        display shrunk.jpg
-        firefox log*/report.html
+  * shrunk.jpg が結果の画像
+  * log_2015*/report.html が統計情報のページ
 
 ## 起動・停止
 
 * インスタンスの停止（EBSにインスタンスは残る）
 
-        sh stop-instances.sh
+        $ sh stop-instances.sh
 
 * インスタンスの再開
 
-        sh start-instances.sh
+        $ sh start-instances.sh
 
 * CloudFormationのスタックを消去（インスタンスも消去）
 
-        sh delete-stack.sh
+        $ sh delete-stack.sh
