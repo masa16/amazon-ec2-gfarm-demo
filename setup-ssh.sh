@@ -1,5 +1,6 @@
 rm -f MdsDnsName
-aws ec2 describe-instances --filter 'Name=tag:aws:cloudformation:logical-id,Values=MdsInstance' --query 'Reservations[].Instances[].[PublicDnsName]' --output text > MdsDnsName
+mds=`aws ec2 describe-instances --filter 'Name=tag:aws:cloudformation:logical-id,Values=MdsInstance' --query 'Reservations[].Instances[].[PublicDnsName]' --output text`
+echo $mds > MdsDnsName
 echo MdsDnsName=`cat MdsDnsName`
 
 source ./env.sh
