@@ -113,7 +113,7 @@ chown apache /var/www/html/gfarm
 su apache -c 'gfarm2fs /var/www/html/gfarm'
 
 # All is well so signal success
-/opt/aws/bin/cfn-signal -e 0 -r 'GfarmMDS setup complete' '",Ref("MdsWaitHandle"),"'
+/opt/aws/bin/cfn-signal -e 0 -r 'Gfarm MDS setup complete' '",Ref("MdsWaitHandle"),"'
 "])))
 
   Metadata("Comment", "Install Gfarm MDS")
@@ -150,10 +150,10 @@ Resource("MdsWaitHandle") do
   Type("AWS::CloudFormation::WaitConditionHandle")
 end
 
-Resource("GfarmMdsWaitCondition") do
+Resource("MdsWaitCondition") do
   Type("AWS::CloudFormation::WaitCondition")
   DependsOn("MdsInstance")
-  Property("Handle", Ref("GfarmMdsWaitHandle"))
+  Property("Handle", Ref("MdsWaitHandle"))
   Property("Timeout", "900")
 end
 

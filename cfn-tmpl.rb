@@ -1,5 +1,5 @@
 KEY_NAME, SUBNET_CIDR, MDS_IP, CN_IP, n =
-`source ./env.sh; echo $keyname $subnet_cidr $mds_ip $cn_ip $n_fsn`.chomp.split
+`source ./env.sh; echo $key_name $subnet_cidr $mds_ip $cn_ip $n_fsn`.chomp.split
 N_FSN = n.to_i
 
 CloudFormation do

@@ -9,6 +9,7 @@ source ./env.sh
 aws cloudformation create-stack --region "$region" \
  --stack-name GfarmWsDemo \
  --template-body file://`pwd`/cfn_template.json \
- --parameters ParameterKey=KeyName,ParameterValue="$keyname"
+ --parameters ParameterKey=KeyName,ParameterValue="$key_name" \
+ --parameters ParameterKey=InstanceType,ParameterValue="$instance_type"
 
 rm -f MdsDnsName
