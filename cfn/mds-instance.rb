@@ -150,6 +150,13 @@ Resource("MdsWaitHandle") do
   Type("AWS::CloudFormation::WaitConditionHandle")
 end
 
+Resource("GfarmMdsWaitCondition") do
+  Type("AWS::CloudFormation::WaitCondition")
+  DependsOn("MdsInstance")
+  Property("Handle", Ref("GfarmMdsWaitHandle"))
+  Property("Timeout", "900")
+end
+
 Output("MdsInstanceId") do
   Description("InstanceId of the EC2 MDS instance")
   Value(Ref("MdsInstance"))
