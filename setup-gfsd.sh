@@ -4,7 +4,7 @@ mds_host=ip-$(echo $mds_ip|sed 's/\./-/g')
 
 s="
 echo '> make gfarm-config.tar on MDS'
-sudo tar cf - /etc/gfarm2.conf /home/_gfarmfs/.gfarm_shared_key /home/ec2-user/.gfarm_shared_key > /tmp/gfarm-config.tar
+sudo tar cf - /etc/gfarm2.conf /home/_gfarmfs/.gfarm_shared_key /home/ec2-user/.gfarm_shared_key /var/www/.gfarm_shared_key > /tmp/gfarm-config.tar
 list='
 $cn_hosts
 '
