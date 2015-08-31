@@ -39,10 +39,10 @@ Rubygemsでインストールする。
         $ git clone https://github.com/masa16/amazon-ec2-gfarm-demo.git
         $ cd amazon-ec2-gfarm-demo
 
-  または
+または
 
-        $ wget https://github.com/masa16/amazon-ec2-gfarm-demo/archive/master.tar.gz -O - | tar xzf -
-        $ cd amazon-ec2-gfarm-demo-master
+      $ wget https://github.com/masa16/amazon-ec2-gfarm-demo/archive/master.tar.gz -O - | tar xzf -
+      $ cd amazon-ec2-gfarm-demo-master
 
 ## Gfarmインスタンスの構築
 
@@ -56,7 +56,7 @@ Rubygemsでインストールする。
         Default region name [None]: デフォルトリージョンを入力
         Default output format [None]: デフォルト出力フォーマットを入力
 
-* env.sh を見て、設定を確認
+* [env.sh](https://github.com/masa16/amazon-ec2-gfarm-demo/blob/master/env.sh) を見て、設定を確認
 
 * 次のスクリプトで、SSHで KeyPair を作成し、公開鍵をAWSにアップロードする
 
@@ -85,8 +85,9 @@ Rubygemsでインストールする。
         $ sh setup-ssh.sh
 
     * ~/.ssh/config に自動的に設定を追加するので、確認する。
-    * EC2のログインアカウント: ec2-user
-    * ホスト名のエイリアス
+    * EC2のログインアカウント:
+      * ec2-user (Amazon Linuxの場合)
+    * ホスト名のエイリアス:
       * MDS: aws-mds
       * FSN: aws-cn11, aws-cn12, ..
     * FSNへの接続は、aws-mdsを経由
