@@ -67,9 +67,20 @@ rpm -iv gfarm-client-*.rpm gfarm-server-*.rpm gfarm-fsnode-*.rpm gfarm-doc-*.rpm
 rpm -iv --force gfarm2fs-*.rpm
 
 # config gfmd
-config-gfarm -A ec2-user
+config-gfarm -N -A ec2-user
+
+# gfkey
 su _gfarmfs sh -c 'cd; gfkey -f -p 94608000'
 su ec2-user sh -c 'cd; gfkey -f -p 94608000'
+
+# add option to gfarm2.conf
+cat <<EOL >> /etc/gfarm2.conf
+schedule_idle_load_thresh 100.0
+EOL
+
+# start gfmd
+service gfarm-pgsql start
+service gfmd start
 
 # config gfsd
 arch=x86_64-amsn-linux
