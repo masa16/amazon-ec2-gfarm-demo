@@ -54,7 +54,7 @@ useradd -m -u 456 -g _gfarmfs -d /home/_gfarmfs _gfarmfs
 
 # download
 cd /tmp
-u=https://s3-us-west-2.amazonaws.com/masa16/amzn-linux/
+u=https://s3-us-west-2.amazonaws.com/masa16/amzn-linux
 rpms='
 gfarm-client-2.6.6-1.amzn1.x86_64.rpm
 gfarm-fsnode-2.6.6-1.amzn1.x86_64.rpm
@@ -62,7 +62,7 @@ gfarm-libs-2.6.6-1.amzn1.x86_64.rpm
 gfarm-server-2.6.6-1.amzn1.x86_64.rpm
 gfarm2fs-1.2.9.8-1.amzn1.x86_64.rpm
 '
-for i in $rpms; do wget -nv $u$i; done
+for i in $rpms; do wget -nv $u/$i; done
 
 # install libs
 rpm -iv gfarm-libs-*.rpm

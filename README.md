@@ -115,7 +115,7 @@ Rubygemsでインストールする。
         # Gnuplot font
         export GDFONTPATH=/usr/share/fonts/dejavu
         export GNUPLOT_DEFAULT_GDFONT=DejaVuSans
-        pwrake --report=log_*
+        pwrake --report log_*
 
 * 実行結果のファイルをローカルにコピー
 
