@@ -1,4 +1,4 @@
-PKG_LIST=%w[rpm-build gcc openssl-devel postgresql94-devel postgresql94-server fuse fuse-devel libacl-devel ruby-devel gnuplot]
+PKG_LIST=%w[rpm-build gcc openssl-devel postgresql94-devel postgresql94-server fuse fuse-devel libacl-devel ruby-devel gnuplot httpd]
 YUM_PKGS={}
 PKG_LIST.each{|x| YUM_PKGS[x]=[]}
 
@@ -70,8 +70,8 @@ rpm -iv --force gfarm2fs-*.rpm
 config-gfarm -N -A ec2-user
 
 # gfkey
-su _gfarmfs sh -c 'cd; gfkey -f -p 94608000'
-su ec2-user sh -c 'cd; gfkey -f -p 94608000'
+su _gfarmfs -c 'cd; gfkey -f -p 94608000'
+su ec2-user -c 'cd; gfkey -f -p 94608000'
 
 # add option to gfarm2.conf
 cat <<EOL >> /etc/gfarm2.conf
@@ -103,6 +103,15 @@ cd ..
 wget -nv https://s3-us-west-2.amazonaws.com/masa16/amzn-linux/Montage_v3.3-bin-amzn.tar.gz
 tar xzf Montage_v3.3-bin-amzn.tar.gz -C /usr/local
 
+# mount Gfarm by httpd account
+usermod -s /bin/bash apache
+chown apache ~apache
+su ec2-user -c 'gfuser -c apache \"httpd account\" /apache \"\"'
+su apache -c 'cd; gfkey -f -p 94608000'
+mkdir -p /var/www/html/gfarm
+chown apache /var/www/html/gfarm
+su apache -c 'gfarm2fs /var/www/html/gfarm'
+
 # All is well so signal success
 /opt/aws/bin/cfn-signal -e 0 -r 'GfarmMDS setup complete' '",Ref("MdsWaitHandle"),"'
 "])))
@@ -123,15 +132,15 @@ tar xzf Montage_v3.3-bin-amzn.tar.gz -C /usr/local
       },
       "packages" => {
         "yum" => YUM_PKGS
+      },
+      "services" => {
+        "sysvinit" => {
+          "httpd"    => {
+            "enabled"       => "true",
+            "ensureRunning" => "true"
+          }
+        }
       }
-      #"services" => {
-      #  "sysvinit" => {
-      #    "httpd"    => {
-      #      "enabled"       => "true",
-      #      "ensureRunning" => "true"
-      #    },
-      #  }
-      #}
     }
   })
 
