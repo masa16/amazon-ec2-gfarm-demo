@@ -1,15 +1,23 @@
 # Amazon EC2 に Gfram/Pwrake 環境を構築
-## 注意事項
+## 説明
 
-* Gfarmを起動するノードは、ホスト名を固定にしなければならないため、
+* Amazon EC2 (Elastic Compute Cloud) に、
+分散ファイルシステムGfarmと、ワークフローシステムPwrake
+の環境を構築したインスタンスを起動し、Pwrakeのデモとして、
+天文画像処理ソフトウエアMontageの実行を行います。
+
+* クラウド環境の自動構築のため、Amazon CloudFormation を使用。
+そのテンプレートは、本パッケージに含まれるスクリプトにより自動生成。
+
+* Gfarmを起動するノードでは、ホスト名を固定する必要があるため、
 Amazon VPC (Virtual Private Cloud) で仮想ネットワークを作成し、
-固定アドレスのインスタンスを作成する。
+固定アドレスのインスタンスを作成。
 
 * 作成するインスタンス
   * MDS (MetaData Server): ログインノードとPwrake実行ノードを兼ねる
   * FSN (File System Nodes): 計算ノードを兼ねる。複数作成可能
 
-* 1年間の無料枠範囲内のt2.micro
+* デフォルトでは、1年間の無料枠範囲内の t2.micro のインスタンスを作成。
 
 ## 必要なソフトウエア
 
@@ -17,17 +25,21 @@ Amazon VPC (Virtual Private Cloud) で仮想ネットワークを作成し、
 * AWS-CLI (Command Line Intefarce) : コマンドラインからAWSを操作
   * http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html
 
-  * Ruby (>=2.0)
+* Ruby (>=2.0)
 
 * cfndsl : Amazon CloudFormationのテンプレートをDSLで作成するツール。
 Rubygemsでインストールする。
 
         gem install cfndsl
 
-* 本パッケージの取得
+* 本パッケージ: 取得方法は、
 
-        wget https://github.com/masa16/amazon-ec2-gfarm-demo/archive/master.tar.gz -O amazon-ec2-gfarm-demo.tar.gz
-        tar xzf amazon-ec2-gfarm-demo.tar.gz
+        git clone https://github.com/masa16/amazon-ec2-gfarm-demo.git
+        cd amazon-ec2-gfarm-demo
+
+または
+
+        wget https://github.com/masa16/amazon-ec2-gfarm-demo/archive/master.tar.gz -O - | tar xzf -
         cd amazon-ec2-gfarm-demo-master
 
 ## Gfarmインスタンスの構築
@@ -117,7 +129,7 @@ Rubygemsでインストールする。
 
 ## 起動・停止
 
-* インスタンスの停止（インスタンスは残る：再開可能）
+* インスタンスの停止（EBSにインスタンスは残る）
 
         sh stop-instances.sh
 
@@ -125,6 +137,6 @@ Rubygemsでインストールする。
 
         sh start-instances.sh
 
-* スタックの消去（インスタンスを消去：再開不可）
+* CloudFormationのスタックを消去（インスタンスも消去）
 
         sh delete-stack.sh
