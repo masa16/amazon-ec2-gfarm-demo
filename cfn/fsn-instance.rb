@@ -1,4 +1,4 @@
-FSN_PKG_LIST=%w[fuse fuse-libs libgomp postgresql94-libs]
+FSN_PKG_LIST=%w[fuse fuse-libs libgomp postgresql94-libs httpd]
 FSN_YUM_PKGS={}
 FSN_PKG_LIST.each{|x| FSN_YUM_PKGS[x]=[]}
 cn_ip = CN_IP
