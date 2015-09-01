@@ -1,4 +1,4 @@
-# Amazon EC2 に Gfram/Pwrake 環境を構築
+# Amazon EC2 に Gfarm/Pwrake 環境を構築
 ## 説明
 
 * Amazon EC2 (Elastic Compute Cloud) に、
@@ -29,7 +29,7 @@ Amazon VPC (Virtual Private Cloud) で仮想ネットワークを作成し、
 
 * Ruby (>=2.0)
 
-* cfndsl: Amazon CloudFormationのテンプレートをDSLで作成するツール。
+* cfndsl: Amazon CloudFormation のテンプレートをDSLで作成するツール。
 Rubygemsでインストールする。
 
         $ gem install cfndsl
@@ -47,7 +47,8 @@ Rubygemsでインストールする。
 
 * AWSにサインアップ
 
-* AWSコンソールから[アクセスキーIDと秘密アクセスキーを取得](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSGettingStartedGuide/AWSCredentials.html)
+* AWSコンソールから
+[アクセスキーIDと秘密アクセスキーを取得](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSGettingStartedGuide/AWSCredentials.html)
 し、AWS-CLIの設定を行う：
 
         $ aws configure
@@ -58,7 +59,7 @@ Rubygemsでインストールする。
 
 * [env.sh](https://github.com/masa16/amazon-ec2-gfarm-demo/blob/master/env.sh) を見て、設定を確認
 
-* 次のスクリプトで、SSHで KeyPair を作成し、公開鍵をAWSにアップロードする
+* 次のスクリプトで、SSH鍵を作成し、公開鍵をAWSにアップロードする
 
         $ sh setup-keypair.sh
 
@@ -91,8 +92,8 @@ Rubygemsでインストールする。
     * ホスト名のエイリアス:
       * MDS: aws-mds
       * FSN: aws-cn11, aws-cn12, ..
-    * FSNへの接続は、aws-mdsを経由
-    * エージェントフォワード
+    * FSNへの接続は、aws-mdsを経由する。
+    * SSH agent forwarding を用いるので、手元のマシンで ssh-agent を立ち上げておく。
     * MDSとFSNの ~/.ssh/config も設定している。
 
 * MDSにログインし、Gfarmが起動していることを確認
@@ -105,7 +106,7 @@ Rubygemsでインストールする。
         ----------------------------------------------
               8023564       1772852       6250712  22%
 
-* FSNの設定は、次のスクリプトで行う必要がある。
+* 次のスクリプトで、MDSの設定をFSNにコピーし、gfsdを起動する。
 
         $ sh setup-gfsd.sh
 
