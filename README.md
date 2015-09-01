@@ -38,8 +38,7 @@ Rubygemsでインストールする。
 
         $ git clone https://github.com/masa16/amazon-ec2-gfarm-demo.git
         $ cd amazon-ec2-gfarm-demo
-
-または
+  または
 
       $ wget https://github.com/masa16/amazon-ec2-gfarm-demo/archive/master.tar.gz -O - | tar xzf -
       $ cd amazon-ec2-gfarm-demo-master
@@ -48,11 +47,12 @@ Rubygemsでインストールする。
 
 * AWSにサインアップ
 
-* AWS-CLIでAWSにアクセスできるようにする
+* AWSコンソールから[アクセスキーIDと秘密アクセスキーを取得](http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSGettingStartedGuide/AWSCredentials.html)
+し、AWS-CLIの設定を行う：
 
         $ aws configure
-        AWS Access Key ID [None]: アクセスIDを入力
-        AWS Secret Access Key [None]: アクセスキーを入力
+        AWS Access Key ID [None]: アクセスキーIDを入力
+        AWS Secret Access Key [None]: 秘密アクセスキーを入力
         Default region name [None]: デフォルトリージョンを入力
         Default output format [None]: デフォルト出力フォーマットを入力
 
@@ -62,7 +62,7 @@ Rubygemsでインストールする。
 
         $ sh setup-keypair.sh
 
-  * パスワードを設定
+  * ここでパスワードを設定
 
 * 環境構築状況を確認できるように、ブラウザからAWSコンソールを開いておく。
   * https://console.aws.amazon.com
@@ -75,7 +75,8 @@ Rubygemsでインストールする。
 
             Number of File System Nodes? : 10
 
-    * 自動的にcfndslでCloudFormationのテンプレートを作成し、環境構築を行っている。
+    * 5分程度待つと(t2.micro)、Gfarm環境が構築される。
+    * 自動的にcfndslで作成されたCloudFormationのテンプレート(json)に基づいて構築。
     * ブラウザからAWSコンソールを開き、インスタンスの作成状況を確認する。
     * 1個のMDSインスタンスとn個のFNSインスタンスが作られる。
     * Gfarmなどのソフトウエアも自動的にインストールされる。
@@ -143,8 +144,6 @@ Rubygemsでインストールする。
 * 実行ログが log_20150904-... のような名前のディレクトリに出力されるので、
 そこから統計情報をHTMLで出力
 
-        [ec2-user@ip-10-0-0-10 montage-m31]$ export GDFONTPATH=/usr/share/fonts/dejavu
-        [ec2-user@ip-10-0-0-10 montage-m31]$ export GNUPLOT_DEFAULT_GDFONT=DejaVuSans
         [ec2-user@ip-10-0-0-10 montage-m31]$ pwrake --report log_*
 
 * HTTP経由でGfarmのディレクトリにアクセス
