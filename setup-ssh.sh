@@ -61,16 +61,6 @@ ForwardAgent yes
 GSSAPIAuthentication no
 EOL
 chmod 600 ~/.ssh/config ~/.ssh/$pubkey_file
-
-echo '> copy SSH settings to $alias_cn*'
-cd .ssh
-list='
-$cn_hosts
-'
-for i in \$list; do
-  echo \"> copy .ssh/config .ssh/$pubkey_file to \$i\"
-  scp config $pubkey_file \$i:.ssh/
-done
 "
 echo "$rcmd"
 ssh $mds "$rcmd"

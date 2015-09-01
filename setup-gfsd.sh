@@ -10,9 +10,11 @@ $cn_hosts
 '
 for i in \$list; do
   echo '> setup gfsd on '\$i
+  scp /tmp/gfarm-config.tar \$i:/tmp
   ssh -t \$i '
     set -v
-    ssh ${mds_host} cat /tmp/gfarm-config.tar | sudo tar xpf - -C /
+    sudo tar xpf /tmp/gfarm-config.tar -C /
+    rm /tmp/gfarm-config.tar
     arch=x86_64-amsn-linux
     h=\$(hostname -f)
     gfhost -c -a \$arch -p 600 -n 1 \$h
