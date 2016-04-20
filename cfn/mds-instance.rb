@@ -49,13 +49,13 @@ useradd -m -u 456 -g _gfarmfs -d /home/_gfarmfs _gfarmfs
 cd /tmp
 u=https://s3-us-west-2.amazonaws.com/masa16/amzn-linux
 rpms='
-gfarm-client-2.6.6-1.amzn1.x86_64.rpm
-gfarm-devel-2.6.6-1.amzn1.x86_64.rpm
-gfarm-doc-2.6.6-1.amzn1.x86_64.rpm
-gfarm-fsnode-2.6.6-1.amzn1.x86_64.rpm
-gfarm-libs-2.6.6-1.amzn1.x86_64.rpm
-gfarm-server-2.6.6-1.amzn1.x86_64.rpm
-gfarm2fs-1.2.9.8-1.amzn1.x86_64.rpm
+gfarm-client-2.6.9-1.amzn1.x86_64.rpm
+gfarm-devel-2.6.9-1.amzn1.x86_64.rpm
+gfarm-doc-2.6.9-1.amzn1.x86_64.rpm
+gfarm-fsnode-2.6.9-1.amzn1.x86_64.rpm
+gfarm-libs-2.6.9-1.amzn1.x86_64.rpm
+gfarm-server-2.6.9-1.amzn1.x86_64.rpm
+gfarm2fs-1.2.9.9-1.amzn1.x86_64.rpm
 '
 for i in $rpms; do wget -nv $u/$i; done
 
@@ -93,9 +93,9 @@ service gfsd start
 gem install rake ffi
 
 # install pwrake
-wget -nv https://github.com/masa16/pwrake2/archive/master.tar.gz -O pwrake2.tar.gz
-tar xzf pwrake2.tar.gz
-cd pwrake2-master
+wget -nv https://github.com/masa16/pwrake/archive/master.tar.gz -O pwrake.tar.gz
+tar xzf pwrake.tar.gz
+cd pwrake-master
 ruby setup.rb
 cd ..
 
