@@ -19,7 +19,10 @@ Amazon VPC (Virtual Private Cloud) で仮想ネットワークを作成し、
 
 * デフォルトでは、1年間の無料枠範囲内の t2.micro のインスタンスを作成。
 
-* 下記のコマンドライン入力は、bash を想定
+* 下記のコマンドライン入力は、bash を想定。
+プロンプトが $ の場合は、手元のマシンで実行。
+プロンプトが [ec2-user@ip-10-0-0-10 ~]$ のような場合は、
+AWSのインスタンスにログインして実行。
 
 ## 必要なソフトウエア
 
@@ -57,9 +60,11 @@ Rubygemsでインストールする。
         Default region name [None]: デフォルトリージョンを入力
         Default output format [None]: デフォルト出力フォーマットを入力
 
-* [env.sh](https://github.com/masa16/amazon-ec2-gfarm-demo/blob/master/env.sh) を見て、設定を確認
+これにより $HOME/.aws/ に鍵が書き込まれる。すでに設定がかかれているされている場合は不要。
 
-* 次のスクリプトで、SSH鍵を作成し、公開鍵をAWSにアップロードする
+* 手元の [env.sh](https://github.com/masa16/amazon-ec2-gfarm-demo/blob/master/env.sh) の設定を確認
+
+* 次のスクリプトで、SSH鍵を作成し、公開鍵をAWSにアップロードする。（最初のみ実行。アップロードされていれば不要）
 
         $ sh setup-keypair.sh
 
@@ -82,7 +87,7 @@ Rubygemsでインストールする。
     * 1個のMDSインスタンスとn個のFNSインスタンスが作られる。
     * Gfarmなどのソフトウエアも自動的にインストールされる。
 
-* インスタンスが作成されたら、次のスクリプトでsshの設定を行う
+* インスタンスが起動したら、次のスクリプトでsshの設定を行う（起動するごとに設定が必要）
 
         $ sh setup-ssh.sh
 
@@ -160,7 +165,7 @@ Rubygemsでインストールする。
 
         $ sh stop-instances.sh
 
-* インスタンスの再開
+* 停止したインスタンスの再開
 
         $ sh start-instances.sh
 
