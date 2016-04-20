@@ -90,7 +90,7 @@ chkconfig --add gfsd
 service gfsd start
 
 # isntall gems
-gem install rake ffi
+gem install rake ffi parallel
 
 # install pwrake
 wget -nv https://github.com/masa16/pwrake/archive/master.tar.gz -O pwrake.tar.gz
