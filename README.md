@@ -2,8 +2,10 @@
 ## 説明
 
 * Amazon EC2 (Elastic Compute Cloud) のインスタンスに、
-分散ファイルシステムGfarmとワークフローシステムPwrakeの環境を構築します。
-科学ワークフローのデモとして、Pwrakeを用いて天文画像処理ソフトウエアMontageを実行します。
+[分散ファイルシステムGfarm](http://oss-tsukuba.org/software/gfarm)と
+[ワークフローシステムPwrake](http://masa16.github.io/pwrake/)の環境を構築します。
+科学ワークフローのデモとして、Pwrakeを用いて天文画像処理ソフトウエア
+[Montage](http://montage.ipac.caltech.edu/)を実行します。
 
 * クラウド環境の自動構築のため、Amazon CloudFormation を使用します。
 そのテンプレートを、本パッケージに含まれるスクリプトにより自動生成します。
