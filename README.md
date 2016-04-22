@@ -103,7 +103,7 @@ Rubygemsでインストールする。
     * SSH agent forwarding を用いるので、手元のマシンで ssh-agent を立ち上げておく。
     * MDSとFSNの ~/.ssh/config も設定している。
 
-* MDSにログインし、Gfarmが起動していることを確認
+* MDSにログインし、Gfarmが起動していることを確認（Yum update等を行うので起動に時間がかかる）
 
         $ ssh aws-mds
 
